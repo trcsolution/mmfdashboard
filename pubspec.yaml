@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   http: ^0.12.2
   provider: ^4.3.3
+  intl: ^0.17.0
+  #json_serializable: ^4.0.2
   #signalr_client: ^0.1.6
 
 

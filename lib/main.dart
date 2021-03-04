@@ -9,7 +9,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   Future<models.Trucks> getList() {
-    models.Trucks rslt = models.Trucks([]);
+    models.Trucks rslt = models.Trucks(DateTime.now(), []);
     rslt.update();
     return Future.value(rslt);
     //delayed(Duration(seconds: 3), () => rslt);
@@ -20,16 +20,13 @@ class MyApp extends StatelessWidget {
     //await Future.delayed(Duration(seconds: 3));
   }
 
-  Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context, models.Trucks trukc) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    // if (picked != null && picked != selectedDate)
-    //   setState(() {
-    //     selectedDate = picked;
-    //   });
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(new Duration(days: 7)));
+    if (picked != null && picked != trukc.mdate) trukc.updateDate(picked);
   }
 
   @override
@@ -59,7 +56,7 @@ class MyApp extends StatelessWidget {
                   body: RefreshIndicator(
                     child: CustomScrollView(
                       slivers: [
-                        _MyAppBar(() => _selectDate(context)),
+                        _MyAppBar(value, () => _selectDate(context, value)),
                         SliverToBoxAdapter(child: SizedBox(height: 20)),
                         SliverList(
                             delegate: SliverChildBuilderDelegate(
@@ -67,7 +64,7 @@ class MyApp extends StatelessWidget {
                             return //Text(value.items[index].name);
                                 Card(
                               child: ListTile(
-                                title: Text(value.items[index].name),
+                                title: Text(value.items[index].truckName),
                                 leading: Icon(Icons.local_shipping),
                                 trailing: Text(
                                     value.items[index].available.toString()),
@@ -91,12 +88,14 @@ class MyApp extends StatelessWidget {
 }
 
 class _MyAppBar extends StatelessWidget {
-  _MyAppBar(this.onselectDate);
+  _MyAppBar(this.m_trucs, this.onselectDate);
   final VoidCallback onselectDate;
+  final models.Trucks m_trucs;
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      title: Text('Trucks', style: Theme.of(context).textTheme.headline1),
+      title: Text('Trucks - ' + m_trucs.mdate.toString().substring(0, 10),
+          style: Theme.of(context).textTheme.headline1),
       floating: true,
       actions: [
         IconButton(
