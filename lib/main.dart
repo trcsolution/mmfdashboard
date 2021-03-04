@@ -94,7 +94,7 @@ class _MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      title: Text('Trucks - ' + m_trucs.mdate.toString().substring(0, 10),
+      title: Text( m_trucs.mdate.toString().substring(0, 10),
           style: Theme.of(context).textTheme.headline1),
       floating: true,
       actions: [
