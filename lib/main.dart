@@ -8,6 +8,16 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  //   signalr
+  // signalr_client: ^0.1.6
+  // final serverUrl = "http://139.59.161.89:8082/ordersHub";
+  //   final hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
+  //   hubConnection.onclose((error) => print("Connection Closed"));
+  //   hubConnection.on("ReceiveMessage", (o) {
+  //     print("Server invoked the method");
+  //   });
+  //   hubConnection.start();
+
   Future<models.Trucks> getList() {
     models.Trucks rslt = models.Trucks(DateTime.now(), []);
     rslt.update();
@@ -94,7 +104,7 @@ class _MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      title: Text( m_trucs.mdate.toString().substring(0, 10),
+      title: Text(m_trucs.mdate.toString().substring(0, 10),
           style: Theme.of(context).textTheme.headline1),
       floating: true,
       actions: [
